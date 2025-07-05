@@ -6,7 +6,7 @@ from dataclasses import _DataclassT, dataclass, field, replace
 from functools import partial
 from pathlib import Path, PurePath
 from shutil import which
-from typing import Any, NamedTuple, TypeAlias
+from typing import Any, NamedTuple
 
 import havsfunc as hav
 import insane_aa as iaa
@@ -16,9 +16,9 @@ from vstools import FrameRange, FrameRangeN, FrameRangesN, replace_ranges
 from vsutil import depth, get_depth, get_y, iterate, join, split
 from yaml import safe_load
 
-Maps: TypeAlias = FrameRangeN | FrameRangesN
+type Maps = FrameRangeN | FrameRangesN
 """Maps type alias."""
-VideoFunc: TypeAlias = Callable[..., vs.VideoNode]
+type VideoFunc = Callable[..., vs.VideoNode]
 """VideoFunc type alias."""
 
 PROC_DEPTH = 16
@@ -860,7 +860,7 @@ def chapt(epname: str, chaptname: str, fallback: str = "") -> int | None:
     return epchaps.get(chaptname, epchaps.get(fallback))
 
 
-def load_map(epname: str, mapname: str) -> Any:  # noqa: ANN401
+def load_map(epname: str, mapname: str) -> Any:
     maps = load_yaml("./maps.yaml")
 
     return None if maps is None else maps[mapname].get(epname)

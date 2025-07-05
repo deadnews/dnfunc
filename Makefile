@@ -1,36 +1,36 @@
-.PHONY: all clean default install lock update checks pc test docs run
+.PHONY: all clean default install lock update check pc test docs run
 
-default: checks
+default: check
 
 install:
 	pre-commit install
-	poetry install --sync
+	uv sync
 
 lock:
-	poetry lock --no-update
+	uv lock
 
 update:
-	poetry up --latest
+	uv sync --upgrade
 
-checks: pc install lint
+check: pc install lint
 pc:
 	pre-commit run -a
 lint:
-	poetry run poe lint
+	uv run ruff check .
+	uv run ruff format .
+	uv run mypy .
 test:
-	poetry run pytest
+	uv run pytest
 
 bumped:
 	git cliff --bumped-version
 
-# make release-tag_name
-# make release-$(git cliff --bumped-version)-alpha.0
-release-%: checks
-	git cliff -o CHANGELOG.md --tag $*
+# make release TAG=$(git cliff --bumped-version)-alpha.0
+release: check
+	git cliff -o CHANGELOG.md --tag $(TAG)
 	pre-commit run --files CHANGELOG.md || pre-commit run --files CHANGELOG.md
 	git add CHANGELOG.md
-	git commit -m "chore(release): prepare for $*"
+	git commit -m "chore(release): prepare for $(TAG)"
 	git push
-	git tag -a $* -m "chore(release): $*"
-	git push origin $*
-	git tag --verify $*
+	git tag -a $(TAG) -m "chore(release): $(TAG)"
+	git push origin $(TAG)
