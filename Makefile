@@ -5,10 +5,8 @@ default: check
 install:
 	pre-commit install
 	uv sync
-
 lock:
 	uv lock
-
 update:
 	uv sync --upgrade
 

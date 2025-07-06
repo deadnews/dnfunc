@@ -1,18 +1,18 @@
 [project]
-name        = "dnfunc"
-description = "A collection of Vapoursynth functions and wrappers"
-readme      = "README.md"
-license     = "MIT"
-keywords    = ["vapoursynth", "vapoursynth-functions", "video-encoding"]
-dynamic     = ["version"]
+name            = "dnfunc"
+description     = "A collection of Vapoursynth functions and wrappers"
+readme          = "README.md"
+license         = "MIT"
+authors         = [{ name = "deadnews", email = "deadnewsgit@gmail.com" }]
+keywords        = ["vapoursynth", "vapoursynth-functions", "video-encoding"]
+dynamic         = ["version"]
+requires-python = ">=3.13"
 
-authors = [{ name = "DeadNews", email = "deadnewsgit@gmail.com" }]
 classifiers = [
   "Operating System :: OS Independent",
   "Topic :: Multimedia :: Video",
 ]
 
-requires-python = ">=3.13"
 dependencies = [
   "vapoursynth>=72",
   "havsfunc>=33",
