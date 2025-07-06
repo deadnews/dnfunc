@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.2.0-alpha.0](https://github.com/DeadNews/dnfunc/compare/v0.1.0...v0.2.0-alpha.0) - 2025-07-05
+
+### 🚀 Features
+
+- migrate from `poetry` to `uv` - ([8e4ff35](https://github.com/DeadNews/dnfunc/commit/8e4ff353a657a65e918afbb2d7502233957904bb))
+
+### 🧹 Chores
+
+- _(config)_ migrate config .renovaterc.json ([#176](https://github.com/DeadNews/dnfunc/issues/176)) - ([033135c](https://github.com/DeadNews/dnfunc/commit/033135c80a199bee1134447398b477878e9dbd1f))
+
+### ⬆️ Dependencies
+
+- _(deps)_ update dependency lvsfunc to v0.8.5 ([#197](https://github.com/DeadNews/dnfunc/issues/197)) - ([f5190b6](https://github.com/DeadNews/dnfunc/commit/f5190b6d56c0f66afc0ed898d933d0873611c0e4))
+- _(deps)_ update dependency lvsfunc to v0.8.4 ([#192](https://github.com/DeadNews/dnfunc/issues/192)) - ([1f85217](https://github.com/DeadNews/dnfunc/commit/1f85217d5e08bfd84e711ed88a419c535cf87499))
+- _(deps)_ update dependency vstools to v3.4.4 ([#191](https://github.com/DeadNews/dnfunc/issues/191)) - ([0d23c9a](https://github.com/DeadNews/dnfunc/commit/0d23c9ab193426882c8d02c1ef978f329a6c7b21))
+- _(deps)_ update dependency lvsfunc to v0.8.3 ([#190](https://github.com/DeadNews/dnfunc/issues/190)) - ([1bef3cf](https://github.com/DeadNews/dnfunc/commit/1bef3cf81d24b8e1b7ab67dbc33b7a6207ffd4b4))
+- _(deps)_ update dependency vstools to v3.3.4 ([#181](https://github.com/DeadNews/dnfunc/issues/181)) - ([3a96b85](https://github.com/DeadNews/dnfunc/commit/3a96b8563ea0175f39a309293518b455bc468a67))
+- _(deps)_ update dependency vstools to v3.3.3 ([#175](https://github.com/DeadNews/dnfunc/issues/175)) - ([abbfb7b](https://github.com/DeadNews/dnfunc/commit/abbfb7bdfe2e299428da757d72df72052cabeab8))
+
 ## [0.1.0](https://github.com/DeadNews/dnfunc/compare/v0.0.7...v0.1.0) - 2024-09-21
 
 ### ⬆️ Dependencies
