@@ -10,7 +10,7 @@ lock:
 update:
 	uv sync --upgrade
 
-check: pc install lint
+check: pc lint
 pc:
 	pre-commit run -a
 lint:
