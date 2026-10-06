@@ -1826,7 +1826,7 @@ def rescale_(
 
 
 def downscale(clip: vs.VideoNode, desc_h: int = 720, to420: bool = False) -> vs.VideoNode:
-    """Downcale clip to the new size."""
+    """Downscale clip to the new size."""
     if clip.height == desc_h:
         return clip
 

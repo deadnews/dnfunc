@@ -1,32 +1,40 @@
-.PHONY: all clean default install lock update check pc test docs run
+.PHONY: alpha bumped check install lint pc release test up update
 
 default: check
 
-install:
-	pre-commit install
-	uv sync
-lock:
-	uv lock
-update:
-	uv sync --upgrade
-
-check: pc lint
+check: pc lint test
 pc:
-	pre-commit run -a
+	prek run -a
 lint:
 	uv run ruff check .
 	uv run ruff format .
-	uv run mypy .
+	uv run ty check .
 test:
 	uv run pytest
+
+install:
+	uv sync
+
+update: up up-ci
+up:
+	uv sync --upgrade
+up-ci:
+	prek update
+	pinact run --update
 
 bumped:
 	git cliff --bumped-version
 
-# make release TAG=$(git cliff --bumped-version)-alpha.0
+# make alpha TAG=$(git cliff --bumped-version)-alpha.0
+alpha: check
+	git tag -a $(TAG) -m "chore(release): $(TAG)"
+	git push origin $(TAG)
+
+# make release TAG=v1.2.3
+release: TAG ?= $(shell git cliff --bumped-version)
 release: check
 	git cliff -o CHANGELOG.md --tag $(TAG)
-	pre-commit run --files CHANGELOG.md || pre-commit run --files CHANGELOG.md
+	prek run --files CHANGELOG.md || prek run --files CHANGELOG.md
 	git add CHANGELOG.md
 	git commit -m "chore(release): prepare for $(TAG)"
 	git push
