@@ -2,11 +2,11 @@
 """A collection of Vapoursynth functions and wrappers."""
 
 from collections.abc import Callable, Collection, Iterable
-from dataclasses import _DataclassT, dataclass, field, replace
+from dataclasses import dataclass, field, replace
 from functools import partial
 from pathlib import Path, PurePath
 from shutil import which
-from typing import Any, NamedTuple
+from typing import TYPE_CHECKING, Any, NamedTuple
 
 import havsfunc as hav
 import insane_aa as iaa
@@ -15,6 +15,9 @@ import vapoursynth as vs
 from vstools import FrameRange, FrameRangeN, FrameRangesN, replace_ranges
 from vsutil import depth, get_depth, get_y, iterate, join, split
 from yaml import safe_load
+
+if TYPE_CHECKING:
+    from _typeshed import DataclassInstance
 
 type Maps = FrameRangeN | FrameRangesN
 """Maps type alias."""
@@ -39,12 +42,12 @@ def load_yaml(file_path: str) -> dict | None:
     return safe_load(f1.read_text()) if f1.is_file() else None
 
 
-def override_dc(
-    data_class: _DataclassT,
+def override_dc[T: DataclassInstance](
+    data_class: T,
     block: str,
     zone: str = "",
     **override: Any,
-) -> _DataclassT:
+) -> T:
     """Override default data_class params.
 
     Notes:
@@ -1340,7 +1343,7 @@ def rfs_dehalo(
         mask_src = dehalo
     else:
         dehalo = hav.DeHalo_alpha(
-            clip=clip,
+            clp=clip,
             rx=dehset.rx,
             ry=dehset.rx,
             darkstr=dehset.darkstr,
@@ -1428,7 +1431,7 @@ def rfs_linedark(
     ldset = LineDarkSettings()
     ldset = override_dc(ldset, block="linedark", zone=zone, **override)
 
-    replaced = hav.FastLineDarkenMOD(clip, **ldset.linedark_args)
+    replaced = hav.FastLineDarkenMOD(clip, **(ldset.linedark_args or {}))
 
     return replace_ranges(clip, replaced, maps) if maps else replaced
 
@@ -1461,7 +1464,7 @@ def rfs_sharp(
     elif shset.mode == "finesharp":
         from finesharp import sharpen
 
-        sharp = sharpen(clip, sstr=sharp)
+        sharp = sharpen(clip, sstr=shset.sharp)
 
     replaced = masked_merge(clip, sharp, mask=mask, yuv=shset.yuv)
 
