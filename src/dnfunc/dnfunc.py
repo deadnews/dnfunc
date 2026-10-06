@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """A collection of Vapoursynth functions and wrappers."""
 
-from collections.abc import Callable, Iterable
+from collections.abc import Callable, Collection, Iterable
 from dataclasses import _DataclassT, dataclass, field, replace
 from functools import partial
 from pathlib import Path, PurePath
@@ -925,7 +925,7 @@ def out(
 
 def pw(
     mrgc: vs.VideoNode,
-    masks: Iterable[int] = (3, 4),
+    masks: Collection[int] = (3, 4),
     mask_zone: str = "",
     epis: vs.VideoNode | None = None,
     clip: vs.VideoNode | None = None,
@@ -1231,10 +1231,10 @@ def qtgmc(clip: vs.VideoNode, zone: str = "", **override: Any) -> vs.VideoNode:
         device=device,
         Sharpness=qset.sharp,
         NoiseProcess=0,
-        ThSAD1=qset.thsad1 * qset.k,
-        ThSAD2=qset.thsad2 * qset.k,
-        ThSCD1=qset.thscd1 * qset.k,
-        ThSCD2=qset.thscd2 * qset.k,
+        ThSAD1=qset.thsad1 * qset.k,  # ty: ignore[invalid-argument-type]
+        ThSAD2=qset.thsad2 * qset.k,  # ty: ignore[invalid-argument-type]
+        ThSCD1=qset.thscd1 * qset.k,  # ty: ignore[invalid-argument-type]
+        ThSCD2=qset.thscd2 * qset.k,  # ty: ignore[invalid-argument-type]
     )
 
 
@@ -1285,7 +1285,7 @@ def edge_detect(clip: vs.VideoNode, mode: str, expr: str = "") -> vs.VideoNode:
     clip_y = get_y(clip)
 
     if mode == "fine2":
-        mask = hav.FineDehalo2(clip_y, showmask=1)
+        mask = hav.FineDehalo2(clip_y, showmask=True)
     elif mode == "kirsch":
         mask = kg.kirsch(clip_y)
     elif mode == "kirsch2":
@@ -1400,9 +1400,9 @@ def rfs_repair(
     repset = override_dc(repset, block="repair", zone=zone, **override)
 
     if repset.edgclr_args:
-        repair = hav.EdgeCleaner(clip, **repset.edgclr_args)
+        repair = hav.EdgeCleaner(clip, **repset.edgclr_args)  # ty: ignore[invalid-argument-type]
     if repset.dering_args:
-        repair = hav.HQDeringmod(clip, **repset.dering_args)
+        repair = hav.HQDeringmod(clip, **repset.dering_args)  # ty: ignore[invalid-argument-type]
 
     mask_src = repair if repset.mask_from_filtred else clip
     mask = outerline_mask(clip=mask_src, mode=repset.mode, max_c=repset.max_c, min_c=repset.min_c)
@@ -1892,7 +1892,8 @@ def pv_diff(
     num_frames = [clip.num_frames for clip in clips]
     clips = [clip.std.Trim(0, min(num_frames) - 1) for clip in clips]
 
-    comparison, frames = diff(clips[0], clips[1], thr=thr, return_ranges=True)
+    # Broken: lvsfunc>=0.8.6 replaced `diff()` with `FindDiff`
+    comparison, frames = diff(clips[0], clips[1], thr=thr, return_ranges=True)  # ty: ignore[call-non-callable]
 
     if exclude_ranges:
         frames = [x for x in frames if x not in get_list(exclude_ranges)]

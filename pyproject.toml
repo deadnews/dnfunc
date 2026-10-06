@@ -23,13 +23,7 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = [
-  "mypy>=1.16.0",
-  "ruff>=0.11.12",
-  "types-pyyaml>=6.0.12.20240917",
-  "pytest>=8.3.5",
-  "pytest-cov>=6.1.1",
-]
+dev = ["ty>=0.0.84", "ruff>=0.11.12", "pytest>=8.3.5", "pytest-cov>=6.1.1"]
 
 [project.urls]
 Repository = "https://github.com/deadnews/dnfunc"
@@ -90,19 +84,16 @@ exclude_lines = [
   "if TYPE_CHECKING:",
 ]
 
-[tool.mypy]
-disallow_untyped_defs  = true
-follow_imports         = "normal"
-ignore_missing_imports = true
-show_column_numbers    = true
-show_error_codes       = true
-warn_unused_ignores    = true
-
-[[tool.mypy.overrides]]
-module                = ["tests.*"]
-disallow_untyped_defs = false
-
-[tool.pyright]
-include          = ["src"]
-ignore           = ["tests"]
-typeCheckingMode = "off"
+[tool.ty.analysis]
+allowed-unresolved-imports = [
+  "CSMOD",
+  "HardAA",
+  "descale",
+  "finesharp",
+  "fvsfunc",
+  "insane_aa",
+  "kagefunc",
+  "muvsfunc",
+  "mvsfunc",
+]
+replace-imports-with-any = ["vapoursynth"]
